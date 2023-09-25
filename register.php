@@ -7,36 +7,38 @@ if (isset($_SESSION['user_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>File Manager - Register</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <!-- ... -->
+
 <body class="bg-gray-100">
     <div class="container mx-auto p-4 align-middle my-12">
         <h1 class="text-2xl font-semibold mb-4">Register</h1>
         <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
-                include_once('includes/config.php');
-                include_once('includes/functions.php');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
+            include_once('includes/config.php');
+            include_once('includes/functions.php');
 
-                $username = htmlentities(strip_tags($_POST['username']));
-                $password = $_POST['password'];
-                $register = registerUser($username, $password);
-                if($register) {
-                        $msg = "Account succesfully created, login to continue";
-                        header("Location: login.php?msg=$msg");
-                        exit;
-                } else {
-                    $msg = "Username already exists, pick another username.";
-                    header("Location: register.php?error=$msg");
-                    exit;
-                }
+            $username = htmlentities(strip_tags($_POST['username']));
+            $password = $_POST['password'];
+            $register = registerUser($username, $password);
+            if ($register) {
+                $msg = "Account succesfully created, login to continue";
+                header("Location: login.php?msg=$msg");
+                exit;
+            } else {
+                $msg = "Username already exists, pick another username.";
+                header("Location: register.php?error=$msg");
+                exit;
             }
-            ?>
+        }
+        ?>
         <form action="register.php" method="post" class="my-8">
-            <?php if($_GET['error']) {
+            <?php if ($_GET['error']) {
                 $error = htmlentities($_GET['error']);
                 echo "<p class='text-rose-900 text-center'>$error <p>";
             } ?>

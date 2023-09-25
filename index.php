@@ -1,7 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    $msg = 'Please login to continue...';
+    header("Location: login.php?error=$msg");
     exit;
 }
 include_once('includes/functions.php');
